@@ -1,6 +1,8 @@
 import {Link, Outlet, useLocation} from 'react-router-dom';
 import houseAnimation from '../assets/lottie/house.json';
 import hamburgerAnimation from '../assets/lottie/hamburger.json'
+import profileAnimation from '../assets/lottie/profile.json'
+import uploadAnimation from '../assets/lottie/upload.json'
 import Lottie, {LottieRefCurrentProps} from 'lottie-react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -13,6 +15,8 @@ const Layout = () => {
   const location = useLocation();
 
   const houseRef = useRef<LottieRefCurrentProps>(null);
+  const profileRef = useRef<LottieRefCurrentProps>(null);
+  const uploadRef = useRef<LottieRefCurrentProps>(null);
   const hamburgerRef = useRef<LottieRefCurrentProps>(null);
 
   const hoverHandler = () => {
@@ -23,12 +27,43 @@ const Layout = () => {
     houseRef.current.play();
   };
 
+  const profileHover = () => {
+    if (!profileRef.current) {
+      return;
+    }
+//    profileRef.current.goToAndStop(0);
+    profileRef.current.play();
+  };
+
+  const uploadHover = () => {
+    if (!uploadRef.current) {
+      return;
+    }
+//    uploadRef.current.goToAndStop(0);
+    uploadRef.current.play();
+  };
+
   const rewind = () => {
     if (!houseRef.current) {
       return;
     }
     houseRef.current.goToAndStop(0);
   }
+
+  const rewindProfile = () => {
+    if (!profileRef.current) {
+      return;
+    }
+    profileRef.current.goToAndStop(0);
+  }
+
+  const rewindUpload = () => {
+    if (!uploadRef.current) {
+      return;
+    }
+    uploadRef.current.goToAndStop(0);
+  }
+
 
   useEffect(() => {
     if (!hamburgerRef.current) {
@@ -74,7 +109,7 @@ const Layout = () => {
                 <Lottie 
                   lottieRef={houseRef}
                   loop={false}
-                  className='h-7' 
+                  className='h-20' 
                   animationData={houseAnimation}
                   onComplete={rewind}
                 />
@@ -83,11 +118,35 @@ const Layout = () => {
             </Link>
           </li>
           <li>
-            <Link
-              className="block p-4 text-center  hover:bg-slate-300"
-              to="/example"
-            >
-              Example
+          <Link 
+              onMouseEnter={profileHover}
+              className="block p-4 text-center  hover:bg-slate-300" to="/">
+              <div className='flex'>
+                <Lottie 
+                  lottieRef={profileRef}
+                  loop={false}
+                  className='h-20' 
+                  animationData={profileAnimation}
+                  onComplete={rewindProfile}
+                />
+                <span className='pl-1'>Profile</span>
+              </div>
+            </Link>
+          </li>
+          <li>
+          <Link 
+              onMouseEnter={uploadHover}
+              className="block p-4 text-center  hover:bg-slate-300" to="/">
+              <div className='flex'>
+                <Lottie 
+                  lottieRef={uploadRef}
+                  loop={false}
+                  className='h-20' 
+                  animationData={uploadAnimation}
+                  onComplete={rewindUpload}
+                />
+                <span className='pl-1'>Upload</span>
+              </div>
             </Link>
           </li>
         </ul>
